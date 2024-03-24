@@ -5,6 +5,7 @@ import com.vuelossony.proyecto.service.VueloService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/vuelos")
@@ -19,12 +20,12 @@ public class VueloController {
     }
 
     @PostMapping("/agregar")
-    public void createVuelo(@RequestBody Vuelo vuelo){
-        vueloService.crearVuelo(vuelo);
+    public Vuelo createVuelo(@RequestBody Vuelo vuelo){
+        return vueloService.crearVuelo(vuelo);
     }
 
     @GetMapping("/{id}")
-    public Vuelo findVueloById(@PathVariable Long id){
+    public Optional<Vuelo> findVueloById(@PathVariable Long id){
         return vueloService.buscarVueloPorId(id);
     }
 
@@ -34,8 +35,18 @@ public class VueloController {
     }
 
     @PutMapping("/actualizar")
-    public Vuelo updateVuelo(@RequestBody Vuelo vuelo){
+    public Optional<Vuelo> updateVuelo(@RequestBody Vuelo vuelo){
         return vueloService.actualizarVuelo(vuelo);
+    }
+
+    @GetMapping("/origen")
+    public List<Vuelo> findVueloByOrigen(@RequestParam String origen){
+        return vueloService.getByOrigen(origen);
+    }
+
+    @GetMapping("/ubicacion")
+    public List<Vuelo> findVueloByUbicacion(@RequestParam String origen, @RequestParam String destino){
+        return vueloService.getByOrigenAndDestino(origen, destino);
     }
 
 }
