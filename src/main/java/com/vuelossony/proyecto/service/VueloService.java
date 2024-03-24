@@ -49,4 +49,6 @@ public class VueloService {
     public List<Vuelo> getByOrigenAndDestino(String origen, String destino) {
         return vueloRepository.findByOrigenAndDestino(origen, destino);
     }
+
+
 }

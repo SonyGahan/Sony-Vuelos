@@ -11,4 +11,5 @@ public interface VueloRepository extends JpaRepository<Vuelo, Long> {
     List<Vuelo> findByOrigen(String origen);
 
     List<Vuelo> findByOrigenAndDestino(String origen, String destino);
+
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/vuelos")
@@ -47,6 +48,19 @@ public class VueloController {
     @GetMapping("/ubicacion")
     public List<Vuelo> findVueloByUbicacion(@RequestParam String origen, @RequestParam String destino){
         return vueloService.getByOrigenAndDestino(origen, destino);
+    }
+
+    @GetMapping("/ofertas")
+    public List<Vuelo> findListadoDeOfertas(@RequestParam double precio){
+        // Obtener todos los vuelos
+        List<Vuelo> vuelos = vueloService.listadoDeVuelos();
+
+        // Filtrar los vuelos por precio menor o igual al especificado
+        List<Vuelo> vuelosFiltrados = vuelos.stream()
+                .filter(vuelo -> vuelo.getPrecioEnPesos() <= precio)
+                .collect(Collectors.toList());
+
+        return vuelosFiltrados;
     }
 
 }
